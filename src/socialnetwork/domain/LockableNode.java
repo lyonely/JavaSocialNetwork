@@ -5,10 +5,10 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class LockableNode<E> {
 
-  private Lock lock = new ReentrantLock();
+  private final Lock lock = new ReentrantLock();
 
-  private E item;
-  private int key;
+  private final E item;
+  private final int key;
   private LockableNode<E> next;
 
   public LockableNode(E item) {
@@ -41,14 +41,6 @@ public class LockableNode<E> {
 
   public LockableNode<E> next() {
     return next;
-  }
-
-  public void setItem(E item) {
-    this.item = item;
-  }
-
-  public void setKey(int key) {
-    this.key = key;
   }
 
   public void setNext(LockableNode<E> next) {
