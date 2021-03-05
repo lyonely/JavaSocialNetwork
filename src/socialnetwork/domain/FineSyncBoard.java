@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class FineSyncBoard implements Board{
+public class FineSyncBoard implements Board {
 
-  AtomicInteger size = new AtomicInteger(0);
   private final LockableNode<Message> head;
   private final LockableNode<Message> tail;
+  AtomicInteger size = new AtomicInteger(0);
 
   public FineSyncBoard() {
     head = new LockableNode<>(null, Integer.MIN_VALUE, null);
@@ -17,7 +17,8 @@ public class FineSyncBoard implements Board{
   }
 
   private LockablePosition<Message> find(LockableNode<Message> start, int key) {
-    LockableNode<Message> prev, curr;
+    LockableNode<Message> prev;
+    LockableNode<Message> curr;
     prev = start;
     prev.lock();
     curr = start.next();
@@ -33,7 +34,8 @@ public class FineSyncBoard implements Board{
 
   public boolean addMessage(Message item) {
     LockableNode<Message> node = new LockableNode<>(item, item.getMessageId());
-    LockableNode<Message> prev = null, curr = null;
+    LockableNode<Message> prev = null;
+    LockableNode<Message> curr = null;
     try {
       LockablePosition<Message> where = find(head, node.key());
       prev = where.pred;
@@ -54,10 +56,11 @@ public class FineSyncBoard implements Board{
 
   public boolean deleteMessage(Message item) {
     LockableNode<Message> node = new LockableNode<>(item);
-    LockableNode<Message> pred = null, curr = null;
+    LockableNode<Message> prev = null;
+    LockableNode<Message> curr = null;
     try {
       LockablePosition<Message> where = find(head, node.key());
-      pred = where.pred;
+      prev = where.pred;
       curr = where.curr;
       if (where.curr.key() > node.key()) {
         return false;
@@ -67,7 +70,7 @@ public class FineSyncBoard implements Board{
         return true;
       }
     } finally {
-      pred.unlock();
+      prev.unlock();
       curr.unlock();
     }
   }
@@ -78,7 +81,8 @@ public class FineSyncBoard implements Board{
 
   public List<Message> getBoardSnapshot() {
     List<Message> snapshot = new ArrayList<>();
-    LockableNode<Message> prev = null, curr = null;
+    LockableNode<Message> prev;
+    LockableNode<Message> curr;
     prev = head;
     prev.lock();
     curr = head.next();

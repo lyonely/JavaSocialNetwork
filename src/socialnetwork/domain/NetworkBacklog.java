@@ -2,7 +2,7 @@ package socialnetwork.domain;
 
 import java.util.Optional;
 
-public class NetworkBacklog implements Backlog{
+public class NetworkBacklog implements Backlog {
 
   int size = 0;
   private final Node<Task> head;
@@ -46,7 +46,8 @@ public class NetworkBacklog implements Backlog{
   }
 
   private Position<Task> find(Node<Task> start, int key) {
-    Node<Task> prev, curr;
+    Node<Task> prev;
+    Node<Task> curr;
     curr = start;
     do {
       prev = curr;

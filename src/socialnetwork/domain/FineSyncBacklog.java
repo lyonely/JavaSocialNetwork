@@ -3,11 +3,11 @@ package socialnetwork.domain;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class FineSyncBacklog implements Backlog{
+public class FineSyncBacklog implements Backlog {
 
-  AtomicInteger size = new AtomicInteger(0);
   private final LockableNode<Task> head;
   private final LockableNode<Task> tail;
+  AtomicInteger size = new AtomicInteger(0);
 
   public FineSyncBacklog() {
     head = new LockableNode<>(null, Integer.MIN_VALUE, null);
@@ -18,7 +18,8 @@ public class FineSyncBacklog implements Backlog{
   @Override
   public boolean add(Task item) {
     LockableNode<Task> node = new LockableNode<>(item, item.getId());
-    LockableNode<Task> prev = null, curr = null;
+    LockableNode<Task> prev = null;
+    LockableNode<Task> curr = null;
     try {
       LockablePosition<Task> where = find(head, node.key());
       prev = where.pred;
@@ -63,7 +64,8 @@ public class FineSyncBacklog implements Backlog{
   }
 
   private LockablePosition<Task> find(LockableNode<Task> start, int key) {
-    LockableNode<Task> prev, curr;
+    LockableNode<Task> prev;
+    LockableNode<Task> curr;
     prev = start;
     prev.lock();
     curr = start.next();

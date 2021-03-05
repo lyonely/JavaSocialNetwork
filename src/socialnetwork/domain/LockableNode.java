@@ -24,6 +24,7 @@ public class LockableNode<E> {
     this.key = key;
     this.next = null;
   }
+
   protected LockableNode(E item, int key, LockableNode<E> next) {
     this.item = item;
     this.key = key;

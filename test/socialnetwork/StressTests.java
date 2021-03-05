@@ -13,7 +13,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.junit.Test;
-import socialnetwork.domain.*;
+import socialnetwork.domain.Backlog;
+import socialnetwork.domain.Board;
+import socialnetwork.domain.FineSyncBoard;
+import socialnetwork.domain.Message;
+import socialnetwork.domain.QueueBacklog;
+import socialnetwork.domain.Worker;
 
 public class StressTests {
 
@@ -105,7 +110,7 @@ public class StressTests {
       }
     }
 
-    Arrays.stream(workers).forEach(w -> w.interrupt());
+    Arrays.stream(workers).forEach(Worker::interrupt);
     Arrays.stream(workers)
         .forEach(
             w -> {

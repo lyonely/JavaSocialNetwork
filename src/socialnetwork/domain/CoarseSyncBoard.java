@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class CoarseSyncBoard extends MessageBoard{
+public class CoarseSyncBoard extends MessageBoard {
 
   private final Lock lock = new ReentrantLock();
 

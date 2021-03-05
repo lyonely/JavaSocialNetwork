@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class CoarseSyncBacklog extends NetworkBacklog{
+public class CoarseSyncBacklog extends NetworkBacklog {
 
   private final Lock lock = new ReentrantLock();
 

@@ -16,7 +16,8 @@ public class MessageBoard implements Board {
   }
 
   private Position<Message> find(Node<Message> start, int key) {
-    Node<Message> prev, curr;
+    Node<Message> prev;
+    Node<Message> curr;
     curr = start;
     do {
       prev = curr;
