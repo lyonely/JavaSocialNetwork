@@ -1,5 +1,10 @@
 package socialnetwork;
 
+import socialnetwork.domain.Message;
+
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class User extends Thread {
@@ -20,9 +25,48 @@ public class User extends Thread {
     return id;
   }
 
+  private Set<User> getUsers() {
+    return socialNetwork.getAllUsers();
+  }
+
+  private void sendMessage() {
+    Set<User> allUsers = getUsers();
+    Random random = new Random();
+    List<User> receivers = List.of();
+    for (User user : allUsers) {
+      if (random.nextBoolean()) {
+        receivers.add(user);
+      }
+    }
+    socialNetwork.postMessage(this, receivers, "Hello");
+  }
+
+  private void deleteRandomMessages() {
+    List<Message> snapshot = socialNetwork.getBoards().get(this).getBoardSnapshot();
+    if (!snapshot.isEmpty()) {
+      Random random = new Random();
+      for (Message message : snapshot) {
+       if (random.nextBoolean()) {
+         socialNetwork.deleteMessage(message);
+       }
+      }
+    }
+  }
+
   @Override
   public void run() {
-    // Implement here
+    Random random = new Random();
+    do {
+      do {
+        Set<User> users = getUsers();
+      } while (random.nextBoolean());
+      do {
+        sendMessage();
+      } while (random.nextBoolean());
+      do {
+        deleteRandomMessages();
+      } while (random.nextBoolean());
+    } while (random.nextBoolean());
   }
 
   @Override

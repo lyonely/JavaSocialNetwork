@@ -8,20 +8,15 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import org.junit.Test;
-import socialnetwork.domain.Backlog;
-import socialnetwork.domain.Board;
-import socialnetwork.domain.Message;
-import socialnetwork.domain.Task;
+import socialnetwork.domain.*;
 import socialnetwork.domain.Task.Command;
-import socialnetwork.domain.Worker;
 
 public class BasicTests {
 
   @Test
   public void testRegistration() {
-    // TODO replace null here by your implementation of Board and Backlog
-    Backlog backlog = null;
-    Board board = null;
+    Backlog backlog = new NetworkBacklog();
+    Board board = new MessageBoard();
     SocialNetwork socialNetwork = new SocialNetwork(backlog);
     User user = new User("test", socialNetwork);
     socialNetwork.register(user, board);
@@ -32,11 +27,10 @@ public class BasicTests {
 
   @Test
   public void testMessageLifecycle() {
-    // TODO replace null here by your implementation of Board and Backlog
-    Backlog backlog = null;
-    Board board1 = null;
-    Board board2 = null;
-    Board board3 = null;
+    Backlog backlog = new NetworkBacklog();
+    Board board1 = new MessageBoard();
+    Board board2 = new MessageBoard();
+    Board board3 = new MessageBoard();
     SocialNetwork socialNetwork = new SocialNetwork(backlog);
     User user1 = new User("test1", socialNetwork);
     User user2 = new User("test2", socialNetwork);
