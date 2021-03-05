@@ -6,7 +6,8 @@ import java.util.List;
 public class MessageBoard implements Board {
 
   int size = 0;
-  private Node<Message> head, tail;
+  private final Node<Message> head;
+  private final Node<Message> tail;
 
   public MessageBoard() {
     head = new Node<>(null, Integer.MIN_VALUE, null);
@@ -15,24 +16,17 @@ public class MessageBoard implements Board {
   }
 
   private Position<Message> find(Node<Message> start, int key) {
-    Node<Message> pred, curr;
+    Node<Message> prev, curr;
     curr = start;
     do {
-      pred = curr;
+      prev = curr;
       curr = curr.next();
     } while (curr.key() < key);  // until curr.key >= key
-    return new Position<Message>(pred, curr);
-  }
-
-  public boolean contains(Message item) {
-    Node<Message> node = new Node<>(item);
-    Position<Message> expectedPosition = find(head, node.key());
-
-    return expectedPosition.curr.key() == node.key();
+    return new Position<>(prev, curr);
   }
 
   public boolean addMessage(Message item) {
-    Node<Message> node = new Node<Message>(item, item.getMessageId());
+    Node<Message> node = new Node<>(item, item.getMessageId());
     Position<Message> where = find(head, node.key());
     if (where.curr.key() == node.key()) {
       return false;

@@ -2,6 +2,7 @@ package socialnetwork;
 
 import socialnetwork.domain.Message;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -32,7 +33,7 @@ public class User extends Thread {
   private void sendMessage() {
     Set<User> allUsers = getUsers();
     Random random = new Random();
-    List<User> receivers = List.of();
+    List<User> receivers = new ArrayList<>();
     for (User user : allUsers) {
       if (random.nextBoolean()) {
         receivers.add(user);

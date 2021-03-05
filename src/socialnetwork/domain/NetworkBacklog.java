@@ -5,7 +5,8 @@ import java.util.Optional;
 public class NetworkBacklog implements Backlog{
 
   int size = 0;
-  private Node<Task> head, tail;
+  private final Node<Task> head;
+  private final Node<Task> tail;
 
   @Override
   public boolean add(Task item) {
@@ -45,36 +46,13 @@ public class NetworkBacklog implements Backlog{
   }
 
   private Position<Task> find(Node<Task> start, int key) {
-    Node<Task> pred, curr;
+    Node<Task> prev, curr;
     curr = start;
     do {
-      pred = curr;
+      prev = curr;
       curr = curr.next();
     } while (curr.key() < key);  // until curr.key >= key
-    return new Position<Task>(pred, curr);
-  }
-
-  public boolean contains(Task item) {
-    Node<Task> node = new Node<>(item);
-    Position<Task> expectedPosition = find(head, node.key());
-
-    return expectedPosition.curr.key() == node.key();
-  }
-
-  public boolean remove(Task item) {
-    Node<Task> node = new Node<>(item);
-    Position<Task> where = find(head, node.key());
-    if (where.curr.key() > node.key()) {
-      return false;
-    } else {
-      where.pred.setNext(where.curr.next());
-      size -= 1;
-      return true;
-    }
-  }
-
-  public int size() {
-    return size;
+    return new Position<>(prev, curr);
   }
 
 }
