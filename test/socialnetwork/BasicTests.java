@@ -15,8 +15,9 @@ public class BasicTests {
 
   @Test
   public void testRegistration() {
-    Backlog backlog = new NetworkBacklog();
-    Board board = new MessageBoard();
+    // TODO replace null here by your implementation of Board and Backlog
+    Backlog backlog = new QueueBacklog();
+    Board board = new FineSyncBoard();
     SocialNetwork socialNetwork = new SocialNetwork(backlog);
     User user = new User("test", socialNetwork);
     socialNetwork.register(user, board);
@@ -27,10 +28,11 @@ public class BasicTests {
 
   @Test
   public void testMessageLifecycle() {
-    Backlog backlog = new NetworkBacklog();
-    Board board1 = new MessageBoard();
-    Board board2 = new MessageBoard();
-    Board board3 = new MessageBoard();
+    // TODO replace null here by your implementation of Board and Backlog
+    Backlog backlog = new QueueBacklog();
+    Board board1 = new FineSyncBoard();
+    Board board2 = new FineSyncBoard();
+    Board board3 = new FineSyncBoard();
     SocialNetwork socialNetwork = new SocialNetwork(backlog);
     User user1 = new User("test1", socialNetwork);
     User user2 = new User("test2", socialNetwork);

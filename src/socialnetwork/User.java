@@ -32,6 +32,7 @@ public class User extends Thread {
 
   private void sendMessage() {
     Set<User> allUsers = getUsers();
+    allUsers.remove(this);
     Random random = new Random();
     List<User> receivers = new ArrayList<>();
     for (User user : allUsers) {
