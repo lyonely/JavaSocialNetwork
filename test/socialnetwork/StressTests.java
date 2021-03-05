@@ -155,11 +155,11 @@ public class StressTests {
     }
 
     // check that the number of messages delivered and received is consistent
-    for (TestUser tUser : userThreads) {
-      Board userBoard = socialNetwork.userBoard(tUser);
-      int expectedCount = expectedMessageCount.getOrDefault(tUser, 0);
+    for (TestUser user : userThreads) {
+      Board userBoard = socialNetwork.userBoard(user);
+      int expectedCount = expectedMessageCount.getOrDefault(user, 0);
       int actualCount = userBoard.size();
-      assertEquals("count for user " + tUser + " doesn't match!", expectedCount, actualCount);
+      assertEquals("count for user " + user + " doesn't match!", expectedCount, actualCount);
     }
   }
 
