@@ -2,8 +2,8 @@ package socialnetwork.domain;
 
 public class Node<E> {
 
-  private E item;
-  private int key;
+  private final E item;
+  private final int key;
   private Node<E> next;
 
   public Node(E item) {
@@ -36,14 +36,6 @@ public class Node<E> {
 
   public Node<E> next() {
     return next;
-  }
-
-  public void setItem(E item) {
-    this.item = item;
-  }
-
-  public void setKey(int key) {
-    this.key = key;
   }
 
   public void setNext(Node<E> next) {
