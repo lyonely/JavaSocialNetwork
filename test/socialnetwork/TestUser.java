@@ -98,6 +98,24 @@ public class TestUser extends User {
     assert newMessage;
   }
 
+  private void updateMessageStorage(Message chosen) {
+    // Update tally for assertions
+    List<User> recipients = new ArrayList<>(chosen.getRecipients());
+    recipients.forEach(
+        k -> {
+          boolean removedMessage = sentMessages.remove(k, chosen);
+          if (SocialNetwork.DEBUG) {
+            System.out.println("TS (rem):: " + this.getUserId() + " :: " + k + "|" + chosen);
+          }
+          assert removedMessage;
+        });
+    boolean removedMessage = sentMessages.remove(this, chosen);
+    if (SocialNetwork.DEBUG) {
+      System.out.println("TS (rem):: " + this.getUserId() + " :: " + this + "|" + chosen);
+    }
+    assert removedMessage;
+  }
+
   protected void pickOneMessageToBeDeleted(Board board) {
     List<Message> messagesOnTheBoard = board.getBoardSnapshot();
     List<Message> myMessages =
@@ -119,24 +137,6 @@ public class TestUser extends User {
 
     socialNetwork.deleteMessage(chosen);
     updateMessageStorage(chosen);
-  }
-
-  private void updateMessageStorage(Message chosen) {
-    // Update tally for assertions
-    List<User> recipients = new ArrayList<>(chosen.getRecipients());
-    recipients.forEach(
-        k -> {
-          boolean removedMessage = sentMessages.remove(k, chosen);
-          if (SocialNetwork.DEBUG) {
-            System.out.println("TS (rem):: " + this.getUserId() + " :: " + k + "|" + chosen);
-          }
-          assert removedMessage;
-        });
-    boolean removedMessage = sentMessages.remove(this, chosen);
-    if (SocialNetwork.DEBUG) {
-      System.out.println("TS (rem):: " + this.getUserId() + " :: " + this + "|" + chosen);
-    }
-    assert removedMessage;
   }
 
   protected String generateNewMessageFor(Collection<User> recipients) {

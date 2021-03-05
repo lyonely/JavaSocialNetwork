@@ -47,7 +47,9 @@ public class BasicTests {
     socialNetwork.register(user2, board2);
     socialNetwork.register(user3, board3);
 
-    final Message sent = socialNetwork.postMessage(user1, Arrays.asList(user2, user3), "cats > dogs");
+    final Message sent = socialNetwork.postMessage(user1,
+        Arrays.asList(user2, user3),
+        "cats > dogs");
     assertEquals(3, backlog.numberOfTasksInTheBacklog());
 
     // the sender also receives his own message

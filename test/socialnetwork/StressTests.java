@@ -48,16 +48,16 @@ public class StressTests {
 
   static class ExperimentSettings {
 
-    int nWorkers;
-    int nUsers;
+    int numberOfWorkers;
+    int numberOfUsers;
     int maxActions;
     int maxRecipients;
     int seed;
 
     public ExperimentSettings(
-        int nWorkers, int nUsers, int maxActions, int maxRecipients, int seed) {
-      this.nWorkers = nWorkers;
-      this.nUsers = nUsers;
+        int numberOfWorkers, int numberOfUsers, int maxActions, int maxRecipients, int seed) {
+      this.numberOfWorkers = numberOfWorkers;
+      this.numberOfUsers = numberOfUsers;
       this.maxActions = maxActions;
       this.maxRecipients = maxRecipients;
       this.seed = seed;
@@ -67,16 +67,16 @@ public class StressTests {
   private void runExperiment(ExperimentSettings settings) {
     // TODO replace by your Backlog implementation
     Backlog backlog = new QueueBacklog();
-    SocialNetwork socialNetwork = new SocialNetwork(backlog);
+    final SocialNetwork socialNetwork = new SocialNetwork(backlog);
 
-    Worker[] workers = new Worker[settings.nWorkers];
+    Worker[] workers = new Worker[settings.numberOfWorkers];
     Arrays.setAll(workers, i -> new Worker(backlog));
     Arrays.stream(workers).forEach(Thread::start);
 
     TestUser.maxActions = settings.maxActions;
     TestUser.maxRecipients = settings.maxRecipients;
 
-    TestUser[] userThreads = new TestUser[settings.nUsers];
+    TestUser[] userThreads = new TestUser[settings.numberOfUsers];
     Arrays.setAll(
         userThreads,
         i -> {
@@ -138,8 +138,8 @@ public class StressTests {
 
     Map<User, Integer> expectedMessageCount = new HashMap<>();
     // check that all messages sent by an user were received properly
-    for (TestUser tUser : userThreads) {
-      Multimap<User, Message> userMessages = tUser.getSentMessages();
+    for (TestUser user : userThreads) {
+      Multimap<User, Message> userMessages = user.getSentMessages();
       //      System.out.println(tUser + " ---> " + userMessages);
 
       for (Map.Entry<User, Collection<Message>> entry : userMessages.asMap().entrySet()) {
@@ -173,9 +173,9 @@ public class StressTests {
     Message current = it.next();
     while (it.hasNext()) {
       Message next = it.next();
-      int cId = current.getMessageId();
-      int nId = next.getMessageId();
-      assertTrue(cId > nId);
+      int currentId = current.getMessageId();
+      int nextId = next.getMessageId();
+      assertTrue(currentId > nextId);
       current = next;
     }
   }
